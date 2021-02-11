@@ -200,6 +200,7 @@ HttpServer::new(move || {
 ```
 
 More details can be found in the sample applications repository.
+<!-- maybe link the examples here again -->
 
 ## License
 

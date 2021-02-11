@@ -11,9 +11,13 @@ pub trait UserDetailsClone {
     fn clone_box(&self) -> Box<dyn UserDetails>;
 }
 
+// this is an interesting pattern, i have never seen it so far.
+// I don't quite get why you don't make UserDetails require Clone, please tell me :D
+
 impl<U> UserDetailsClone for U
 where
     U: 'static + UserDetails + Clone,
+    // I don't know wny the static lifetime is necessary here, maybe i will get it when I see an example
 {
     fn clone_box(&self) -> Box<dyn UserDetails> {
         Box::new(self.clone())
