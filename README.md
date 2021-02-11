@@ -58,7 +58,7 @@ Both features require `openssl` to be installed on the system.
 The documentation about how to install it can be found [here](https://docs.rs/openssl/0.10.32/openssl/#automatic).
 
 ## Samples
-Sample applications can be found [here]
+Sample applications can be found [here](https://github.com/cschaible/actix-web-security-samples).
 
 
 
