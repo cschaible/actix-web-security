@@ -82,6 +82,9 @@ fn add_env_error_message(
     };
 }
 
+// phew this configuration style looks a bit hacky to me :D
+// but it seems pretty flexible! so it might be a good idea to do it that way!
+
 pub fn overwrite_auth_error_status_code(error: AuthenticationError, status_code: u16) {
     assert!((100..=1000).contains(&status_code), "Invalid status code");
     std::env::set_var(format!("{}_code", error), status_code.to_string());

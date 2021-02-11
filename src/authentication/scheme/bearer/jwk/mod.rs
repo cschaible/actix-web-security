@@ -12,6 +12,7 @@ pub struct JwkLoader<T: for<'a> Deserialize<'a>> {
 }
 
 impl<T: for<'a> Deserialize<'a>> JwkLoader<T> {
+    // i don't like that those functions can panic
     pub fn from_file(filename: String) -> JwkLoader<T> {
         let key = fs::read_to_string(filename).expect("Key file couldn't be read");
         let jwks: T = serde_json::from_str(key.as_str()).unwrap();
