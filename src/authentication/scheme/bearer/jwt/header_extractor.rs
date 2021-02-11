@@ -20,7 +20,7 @@ impl<T: for<'b> Deserialize<'b> + Claims> BearerAuthenticationExtractor<T> {
         BearerAuthenticationExtractor { token_decoders }
     }
 
-    fn extract_bearer(&self, header: &HeaderValue) -> Result<String, AuthenticationError> {
+    fn extract_bearer<'a>(&self, header: &'a HeaderValue) -> Result<&'a str, AuthenticationError> {
         extract_auth_header(header, "Bearer", 8)
     }
 }

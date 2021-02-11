@@ -12,11 +12,11 @@ pub trait AuthorizationHeaderExtractor: Send + Sync {
     ) -> Result<Box<dyn Authentication>, AuthenticationError>;
 }
 
-pub fn extract_auth_header(
-    header: &HeaderValue,
+pub fn extract_auth_header<'a>(
+    header: &'a HeaderValue,
     auth_scheme: &str,
     header_length: usize,
-) -> Result<String, AuthenticationError> {
+) -> Result<&'a str, AuthenticationError> {
     if header.len() < header_length {
         return Err(AuthenticationError::InvalidAuthorizationHeader);
     }
@@ -35,5 +35,5 @@ pub fn extract_auth_header(
     } else {
         return Err(AuthenticationError::InvalidAuthorizationHeader);
     }
-    Ok(token.to_string())
+    Ok(token)
 }
