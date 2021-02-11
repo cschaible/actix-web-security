@@ -59,12 +59,8 @@ impl AuthorizationHeaderExtractor for BasicAuthenticationExtractor {
         headers: &HeaderMap,
     ) -> Result<Box<dyn Authentication>, AuthenticationError> {
         let authorization_header = headers.get(header::AUTHORIZATION);
-        match authorization_header {
-            Some(header_value) => match self.extract_basic(header_value) {
-                Ok(basic_auth) => Ok(Box::new(basic_auth)),
-                Err(e) => Err(e),
-            },
-            None => Err(AuthenticationError::AuthorizationHeaderNotSet),
-        }
+        let header_value =
+            authorization_header.ok_or(AuthenticationError::AuthorizationHeaderNotSet)?;
+        Ok(Box::new(self.extract_basic(header_value)?))
     }
 }
