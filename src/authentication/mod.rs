@@ -8,21 +8,21 @@ pub mod error;
 pub mod middleware;
 pub mod scheme;
 
-
 #[derive(Clone)]
 pub struct ProviderManager {
-    providers: Vec<Box<dyn AuthenticationProvider>>
+    providers: Vec<Box<dyn AuthenticationProvider>>,
 }
 
 impl ProviderManager {
     pub fn new(providers: Vec<Box<dyn AuthenticationProvider>>) -> ProviderManager {
-        ProviderManager {
-            providers
-        }
+        ProviderManager { providers }
     }
 
     #[allow(clippy::borrowed_box)]
-    pub async fn authenticate(&self, authentication: &Box<dyn Authentication>) -> Result<Box<dyn UserDetails>, AuthenticationError> {
+    pub async fn authenticate(
+        &self,
+        authentication: &Box<dyn Authentication>,
+    ) -> Result<Box<dyn UserDetails>, AuthenticationError> {
         let providers = &self.providers;
         let mut last_error: Option<AuthenticationError> = None;
         for provider in providers {
@@ -37,7 +37,7 @@ impl ProviderManager {
         }
         match last_error {
             Some(e) => Err(e),
-            None => Err(AuthenticationError::UsernameNotFound)
+            None => Err(AuthenticationError::UsernameNotFound),
         }
     }
 }

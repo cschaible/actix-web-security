@@ -27,14 +27,12 @@ impl EndpointMatcher for AllEndpointsMatcher {
 
 #[derive(Clone)]
 pub struct SpecificUrlsMatcher {
-    paths: Vec<String>
+    paths: Vec<String>,
 }
 
 impl SpecificUrlsMatcher {
     pub fn new(paths: Vec<String>) -> SpecificUrlsMatcher {
-        SpecificUrlsMatcher {
-            paths
-        }
+        SpecificUrlsMatcher { paths }
     }
 }
 

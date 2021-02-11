@@ -10,22 +10,28 @@ use actix_web::Error;
 
 use crate::authentication::endpoint_matcher::EndpointMatcher;
 use crate::authentication::error::error_type::AuthenticationError;
-use crate::authentication::ProviderManager;
 use crate::authentication::scheme::header_extractor::AuthorizationHeaderExtractor;
+use crate::authentication::ProviderManager;
 use crate::user_details::attachment::UserDetailsRequestAttachmentHelper;
 
 pub struct HttpAuthenticationMiddleware<T, U>
-    where T: AuthorizationHeaderExtractor + Clone,
-          U: EndpointMatcher + Clone {
+where
+    T: AuthorizationHeaderExtractor + Clone,
+    U: EndpointMatcher + Clone,
+{
     authorization_extractor: Box<T>,
     provider_manager: ProviderManager,
     endpoint_matcher: Box<U>,
 }
 
-impl<T: AuthorizationHeaderExtractor + Clone, U: EndpointMatcher + Clone> HttpAuthenticationMiddleware<T, U> {
-    pub fn new(provider_manager: ProviderManager,
-               authorization_extractor: Box<T>,
-               endpoint_matcher: Box<U>) -> HttpAuthenticationMiddleware<T, U> {
+impl<T: AuthorizationHeaderExtractor + Clone, U: EndpointMatcher + Clone>
+    HttpAuthenticationMiddleware<T, U>
+{
+    pub fn new(
+        provider_manager: ProviderManager,
+        authorization_extractor: Box<T>,
+        endpoint_matcher: Box<U>,
+    ) -> HttpAuthenticationMiddleware<T, U> {
         HttpAuthenticationMiddleware {
             authorization_extractor,
             provider_manager,
@@ -35,9 +41,11 @@ impl<T: AuthorizationHeaderExtractor + Clone, U: EndpointMatcher + Clone> HttpAu
 }
 
 impl<S, B, T, U> Transform<S> for HttpAuthenticationMiddleware<T, U>
-    where T: AuthorizationHeaderExtractor + Clone + 'static,
-          U: EndpointMatcher + Clone,
-          S: Service<Request=ServiceRequest, Response=ServiceResponse<B>, Error=Error> + 'static {
+where
+    T: AuthorizationHeaderExtractor + Clone + 'static,
+    U: EndpointMatcher + Clone,
+    S: Service<Request = ServiceRequest, Response = ServiceResponse<B>, Error = Error> + 'static,
+{
     type Request = ServiceRequest;
     type Response = ServiceResponse<B>;
     type Error = Error;
@@ -50,11 +58,20 @@ impl<S, B, T, U> Transform<S> for HttpAuthenticationMiddleware<T, U>
         let provider_manager = Arc::new(self.provider_manager.clone());
         let authorization_extractor = Arc::new(self.authorization_extractor.clone());
         let endpoint_matcher = Arc::new(self.endpoint_matcher.clone());
-        future::ready(Ok(HttpAuthenticationService { service, provider_manager, authorization_extractor, endpoint_matcher }))
+        future::ready(Ok(HttpAuthenticationService {
+            service,
+            provider_manager,
+            authorization_extractor,
+            endpoint_matcher,
+        }))
     }
 }
 
-pub struct HttpAuthenticationService<S, T: AuthorizationHeaderExtractor + Clone, U: EndpointMatcher + Clone> {
+pub struct HttpAuthenticationService<
+    S,
+    T: AuthorizationHeaderExtractor + Clone,
+    U: EndpointMatcher + Clone,
+> {
     service: Rc<RefCell<S>>,
     provider_manager: Arc<ProviderManager>,
     authorization_extractor: Arc<Box<T>>,
@@ -62,13 +79,15 @@ pub struct HttpAuthenticationService<S, T: AuthorizationHeaderExtractor + Clone,
 }
 
 impl<S, B, T, U> Service for HttpAuthenticationService<S, T, U>
-    where U: EndpointMatcher + Clone,
-          T: AuthorizationHeaderExtractor + Clone + 'static,
-          S: Service<Request=ServiceRequest, Response=ServiceResponse<B>, Error=Error> + 'static {
+where
+    U: EndpointMatcher + Clone,
+    T: AuthorizationHeaderExtractor + Clone + 'static,
+    S: Service<Request = ServiceRequest, Response = ServiceResponse<B>, Error = Error> + 'static,
+{
     type Request = ServiceRequest;
     type Response = ServiceResponse<B>;
     type Error = Error;
-    type Future = Pin<Box<dyn Future<Output=Result<Self::Response, Error>>>>;
+    type Future = Pin<Box<dyn Future<Output = Result<Self::Response, Error>>>>;
 
     fn poll_ready(&mut self, cx: &mut Context) -> Poll<Result<(), Self::Error>> {
         self.service.poll_ready(cx)
@@ -93,10 +112,10 @@ impl<S, B, T, U> Service for HttpAuthenticationService<S, T, U>
                                 req.attach(result);
                                 error = None;
                             }
-                            Err(e) => error = Some(e)
+                            Err(e) => error = Some(e),
                         };
                     }
-                    Err(e) => error = Some(e)
+                    Err(e) => error = Some(e),
                 };
 
                 match error {

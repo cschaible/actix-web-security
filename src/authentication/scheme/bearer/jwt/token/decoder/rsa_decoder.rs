@@ -1,9 +1,9 @@
-use jsonwebtoken::{Algorithm, decode, DecodingKey, Validation};
+use jsonwebtoken::{decode, Algorithm, DecodingKey, Validation};
 use serde::Deserialize;
 
 use crate::authentication::error::error_type::AuthenticationError;
-use crate::authentication::scheme::bearer::jwt::token::Claims;
 use crate::authentication::scheme::bearer::jwt::token::decoder::TokenDecoder;
+use crate::authentication::scheme::bearer::jwt::token::Claims;
 
 pub trait RsaKeyComponents {
     fn get_n(&self) -> String;
@@ -24,7 +24,8 @@ impl RsaJwtDecoder {
             let n: String = rsa_key.get_n();
             let e: String = rsa_key.get_e();
             // It is important to call into_static(). Otherwise there are problems with the lifetimes of n and e.
-            let decoding_key = DecodingKey::from_rsa_components(n.as_ref(), e.as_ref()).into_static();
+            let decoding_key =
+                DecodingKey::from_rsa_components(n.as_ref(), e.as_ref()).into_static();
             decoding_keys.push(decoding_key);
         }
 

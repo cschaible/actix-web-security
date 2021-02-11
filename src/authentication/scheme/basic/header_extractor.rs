@@ -4,7 +4,9 @@ use async_trait::async_trait;
 use crate::authentication::error::error_type::AuthenticationError;
 use crate::authentication::scheme::authentication::Authentication;
 use crate::authentication::scheme::basic::BasicAuthentication;
-use crate::authentication::scheme::header_extractor::{AuthorizationHeaderExtractor, extract_auth_header};
+use crate::authentication::scheme::header_extractor::{
+    extract_auth_header, AuthorizationHeaderExtractor,
+};
 
 #[derive(Clone)]
 pub struct BasicAuthenticationExtractor {}
@@ -49,19 +51,20 @@ impl Default for BasicAuthenticationExtractor {
 
 #[async_trait]
 impl AuthorizationHeaderExtractor for BasicAuthenticationExtractor {
-    async fn extract_token(&self, headers: &HeaderMap) -> Result<Box<dyn Authentication>, AuthenticationError> {
+    async fn extract_token(
+        &self,
+        headers: &HeaderMap,
+    ) -> Result<Box<dyn Authentication>, AuthenticationError> {
         let authorization_header = headers.get("authorization");
         match authorization_header {
-            Some(header_value) => {
-                match self.extract_basic(header_value) {
-                    Ok(extracted_token) => Ok(Box::new(BasicAuthentication {
-                        username: extracted_token.0,
-                        password: extracted_token.1,
-                    })),
-                    Err(e) => Err(e)
-                }
-            }
-            None => Err(AuthenticationError::AuthorizationHeaderNotSet)
+            Some(header_value) => match self.extract_basic(header_value) {
+                Ok(extracted_token) => Ok(Box::new(BasicAuthentication {
+                    username: extracted_token.0,
+                    password: extracted_token.1,
+                })),
+                Err(e) => Err(e),
+            },
+            None => Err(AuthenticationError::AuthorizationHeaderNotSet),
         }
     }
 }

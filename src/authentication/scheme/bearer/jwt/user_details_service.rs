@@ -1,6 +1,6 @@
 use async_trait::async_trait;
-use downcast_rs::Downcast;
 use downcast_rs::impl_downcast;
+use downcast_rs::Downcast;
 
 use crate::authentication::scheme::bearer::jwt::Claims;
 use crate::user_details::UserDetails;
@@ -17,7 +17,9 @@ pub trait JwtUserDetailsServiceClone: Send + Sync {
 }
 
 impl<U> JwtUserDetailsServiceClone for U
-    where U: 'static + JwtUserDetailsService + Clone {
+where
+    U: 'static + JwtUserDetailsService + Clone,
+{
     fn clone_box(&self) -> Box<dyn JwtUserDetailsService> {
         Box::new(self.clone())
     }

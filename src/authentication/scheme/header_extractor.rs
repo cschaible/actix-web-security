@@ -6,10 +6,17 @@ use crate::authentication::scheme::authentication::Authentication;
 
 #[async_trait]
 pub trait AuthorizationHeaderExtractor: Send + Sync {
-    async fn extract_token(&self, request: &HeaderMap) -> Result<Box<dyn Authentication>, AuthenticationError>;
+    async fn extract_token(
+        &self,
+        request: &HeaderMap,
+    ) -> Result<Box<dyn Authentication>, AuthenticationError>;
 }
 
-pub fn extract_auth_header(header: &HeaderValue, auth_scheme: &str, header_length: usize) -> Result<String, AuthenticationError> {
+pub fn extract_auth_header(
+    header: &HeaderValue,
+    auth_scheme: &str,
+    header_length: usize,
+) -> Result<String, AuthenticationError> {
     if header.len() < header_length {
         return Err(AuthenticationError::InvalidAuthorizationHeader);
     }
@@ -22,7 +29,9 @@ pub fn extract_auth_header(header: &HeaderValue, auth_scheme: &str, header_lengt
             Some(scheme) if scheme == auth_scheme => (),
             _ => return Err(AuthenticationError::InvalidAuthorizationHeader),
         }
-        token = parts.next().ok_or(AuthenticationError::InvalidAuthorizationHeader)?
+        token = parts
+            .next()
+            .ok_or(AuthenticationError::InvalidAuthorizationHeader)?
     } else {
         return Err(AuthenticationError::InvalidAuthorizationHeader);
     }

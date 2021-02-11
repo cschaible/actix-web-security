@@ -33,10 +33,14 @@ pub struct DefaultJwk {
 
 impl RsaKeyComponents for DefaultJwk {
     fn get_n(&self) -> String {
-        self.n.clone().expect("rsa 'n' component not present in jwk")
+        self.n
+            .clone()
+            .expect("rsa 'n' component not present in jwk")
     }
 
     fn get_e(&self) -> String {
-        self.e.clone().expect("rsa 'e' component not present in jwk")
+        self.e
+            .clone()
+            .expect("rsa 'e' component not present in jwk")
     }
 }
