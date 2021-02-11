@@ -1,4 +1,4 @@
-use actix_web::http::{HeaderMap, HeaderValue};
+use actix_web::http::{header, HeaderMap, HeaderValue};
 use async_trait::async_trait;
 
 use crate::authentication::error::error_type::AuthenticationError;
@@ -55,7 +55,7 @@ impl AuthorizationHeaderExtractor for BasicAuthenticationExtractor {
         &self,
         headers: &HeaderMap,
     ) -> Result<Box<dyn Authentication>, AuthenticationError> {
-        let authorization_header = headers.get("authorization");
+        let authorization_header = headers.get(header::AUTHORIZATION);
         match authorization_header {
             Some(header_value) => match self.extract_basic(header_value) {
                 Ok(extracted_token) => Ok(Box::new(BasicAuthentication {
