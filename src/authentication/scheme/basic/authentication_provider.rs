@@ -24,10 +24,9 @@ impl BasicAuthenticationProvider {
 
 #[async_trait]
 impl AuthenticationProvider for BasicAuthenticationProvider {
-    #[allow(clippy::borrowed_box)]
     async fn authenticate(
         &self,
-        authentication: &Box<dyn Authentication>,
+        authentication: &dyn Authentication,
     ) -> Result<Box<dyn UserDetails>, AuthenticationError> {
         if authentication.is::<BasicAuthentication>() {
             let basic_auth = authentication

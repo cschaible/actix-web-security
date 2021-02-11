@@ -106,7 +106,8 @@ where
                 let extracted_token = authorization_extractor.extract_token(&req.headers()).await;
                 match extracted_token {
                     Ok(token) => {
-                        let authentication_result = provider_manager.authenticate(&token).await;
+                        let authentication_result =
+                            provider_manager.authenticate(token.as_ref()).await;
                         match authentication_result {
                             Ok(result) => {
                                 req.attach(result);

@@ -18,14 +18,12 @@ impl ProviderManager {
         ProviderManager { providers }
     }
 
-    #[allow(clippy::borrowed_box)]
     pub async fn authenticate(
         &self,
-        authentication: &Box<dyn Authentication>,
+        authentication: &dyn Authentication,
     ) -> Result<Box<dyn UserDetails>, AuthenticationError> {
-        let providers = &self.providers;
         let mut last_error: Option<AuthenticationError> = None;
-        for provider in providers {
+        for provider in &self.providers {
             let result = provider.authenticate(authentication).await;
             match result {
                 Ok(user) => return Ok(user),

@@ -95,8 +95,7 @@ pub struct JwtUserDetailsServiceImpl {
 
 #[async_trait]
 impl JwtUserDetailsService for JwtUserDetailsServiceImpl {
-    #[allow(clippy::borrowed_box)]
-    async fn find_user(&self, token: &Box<dyn Claims>) -> Option<Box<dyn UserDetails>> {
+    async fn find_user(&self, token: &dyn Claims) -> Option<Box<dyn UserDetails>> {
         match token.downcast_ref::<DefaultJwt>() {
             Some(claims) => {
                 let sub = claims.sub.clone().expect("sub expected");

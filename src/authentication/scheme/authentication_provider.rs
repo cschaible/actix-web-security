@@ -6,10 +6,9 @@ use crate::user_details::UserDetails;
 
 #[async_trait]
 pub trait AuthenticationProvider: AuthenticationProviderClone {
-    #[allow(clippy::borrowed_box)]
     async fn authenticate(
         &self,
-        authentication: &Box<dyn Authentication>,
+        authentication: &dyn Authentication,
     ) -> Result<Box<dyn UserDetails>, AuthenticationError>;
 }
 

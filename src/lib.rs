@@ -5,3 +5,5 @@ pub mod user_details;
 
 // no crate documentation :c
 // maybe try https://github.com/phaazon/cargo-sync-readme ?
+
+// after trying the &Box<dyn ...> -> &dyn ... refactoring, I didn't feel very safe without tests :D

@@ -7,7 +7,6 @@ use crate::user_details::UserDetails;
 
 #[async_trait]
 pub trait JwtUserDetailsService: Downcast + JwtUserDetailsServiceClone {
-    #[allow(clippy::borrowed_box)]
     async fn find_user(&self, token: &Box<dyn Claims>) -> Option<Box<dyn UserDetails>>;
 }
 impl_downcast!(JwtUserDetailsService);
