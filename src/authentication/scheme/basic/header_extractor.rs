@@ -16,7 +16,10 @@ impl BasicAuthenticationExtractor {
         BasicAuthenticationExtractor {}
     }
 
-    fn extract_basic(&self, header: &HeaderValue) -> Result<(String, String), AuthenticationError> {
+    fn extract_basic(
+        &self,
+        header: &HeaderValue,
+    ) -> Result<BasicAuthentication, AuthenticationError> {
         let token = extract_auth_header(header, "Basic", 7)?;
 
         // Decode the token
@@ -35,7 +38,7 @@ impl BasicAuthenticationExtractor {
                     .ok_or(AuthenticationError::InvalidAuthorizationHeader)
                     .map(|password| password.to_string())?;
 
-                return Ok((username, password));
+                return Ok(BasicAuthentication { username, password });
             }
         }
 
@@ -58,10 +61,7 @@ impl AuthorizationHeaderExtractor for BasicAuthenticationExtractor {
         let authorization_header = headers.get(header::AUTHORIZATION);
         match authorization_header {
             Some(header_value) => match self.extract_basic(header_value) {
-                Ok(extracted_token) => Ok(Box::new(BasicAuthentication {
-                    username: extracted_token.0,
-                    password: extracted_token.1,
-                })),
+                Ok(basic_auth) => Ok(Box::new(basic_auth)),
                 Err(e) => Err(e),
             },
             None => Err(AuthenticationError::AuthorizationHeaderNotSet),
