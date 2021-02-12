@@ -38,20 +38,20 @@ SOFTWARE.
 Add the following dependency to your `cargo.toml`.
 
 ```toml
-actix-web-security = "0.1.0-alpha.1"
+actix-web-security = "0.1.0-alpha.2"
 ```
 
 The following features can be activated:
 * `jwk-loader`  
   This feature can be activated to download custom JWKs from an authorization server
   ```toml
-  actix-web-security = { version="0.1.0-alpha.1", features = ["jwk-loader"] }
+  actix-web-security = { version="0.1.0-alpha.2", features = ["jwk-loader"] }
   ```
   
 * `jwk-default-loader`  
   This feature can be activated to download `DefaultJwks` from an authorization server.
   ```toml
-  actix-web-security = { version="0.1.0-alpha.1", features = ["jwk-default-loader"] }
+  actix-web-security = { version="0.1.0-alpha.2", features = ["jwk-default-loader"] }
   ```
 
 Both features require `openssl` to be installed on the system.

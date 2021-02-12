@@ -1,6 +1,6 @@
 [package]
 name = "actix-web-security"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 authors = ["Christian Schaible <cschaible@users.noreply.github.com>"]
 description = "Unofficial OAuth2 resource server lib for actix web - NOT production ready!"
 keywords = ["actix", "oauth", "openid", "resource-server"]
