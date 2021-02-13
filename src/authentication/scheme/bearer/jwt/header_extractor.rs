@@ -1,4 +1,4 @@
-use actix_web::http::{HeaderMap, HeaderValue};
+use actix_web::http::{header, HeaderMap, HeaderValue};
 use async_trait::async_trait;
 use serde::Deserialize;
 
@@ -33,7 +33,7 @@ impl<T: for<'b> Deserialize<'b> + Claims> AuthorizationHeaderExtractor
         &self,
         headers: &HeaderMap,
     ) -> Result<Box<dyn Authentication>, AuthenticationError> {
-        let authorization_header = headers.get("authorization");
+        let authorization_header = headers.get(header::AUTHORIZATION);
         match authorization_header {
             Some(header_value) => match self.extract_bearer(header_value) {
                 Ok(extracted_token) => {
