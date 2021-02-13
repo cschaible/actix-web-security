@@ -128,7 +128,7 @@ If the crate feature `jwk-default-loader` is used the JWKs can be downloaded aut
 decoders instantiated automatically by using the `load_default_rsa_jwks` function.
 
 ```rust
-BearerAuthenticationExtractor::new(load_default_rsa_jwks(auth_server_jwks_url, Algorithm::RS256));
+BearerAuthenticationExtractor::new(load_default_rsa_jwks(auth_server_jwks_url, Algorithm::RS256)?);
 ```
 
 

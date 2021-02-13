@@ -13,3 +13,15 @@ pub enum AuthenticationError {
     #[display(fmt = "Access denied")]
     UsernameNotFound,
 }
+
+#[derive(Debug, Display, Error, PartialEq, Eq, Hash, Clone)]
+pub enum JwkLoaderError {
+    #[display(fmt = "The key file could not be read")]
+    KeyFileCouldNotBeRead,
+    #[display(fmt = "Invalid key file")]
+    InvalidKeyFile,
+    #[display(fmt = "Invalid JSON response")]
+    InvalidJsonResponse,
+    #[display(fmt = "JWKs could not be downloaded")]
+    JwksCouldNotBeDownloaded,
+}
