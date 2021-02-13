@@ -1,6 +1,6 @@
 use async_trait::async_trait;
-use downcast_rs::Downcast;
 use downcast_rs::impl_downcast;
+use downcast_rs::Downcast;
 
 use crate::user_details::UserDetails;
 
@@ -15,7 +15,9 @@ pub trait BasicUserDetailsServiceClone: Sync + Send {
 }
 
 impl<U> BasicUserDetailsServiceClone for U
-    where U: 'static + BasicUserDetailsService + Clone {
+where
+    U: 'static + BasicUserDetailsService + Clone,
+{
     fn clone_box(&self) -> Box<dyn BasicUserDetailsService> {
         Box::new(self.clone())
     }

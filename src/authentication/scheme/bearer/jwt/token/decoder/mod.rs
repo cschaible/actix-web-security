@@ -14,7 +14,9 @@ pub trait TokenDecoderClone<T: for<'b> Deserialize<'b> + Claims>: Send + Sync {
 }
 
 impl<T: for<'b> Deserialize<'b> + Claims, U> TokenDecoderClone<T> for U
-    where U: 'static + TokenDecoder<T> + Clone {
+where
+    U: 'static + TokenDecoder<T> + Clone,
+{
     fn clone_box(&self) -> Box<dyn TokenDecoder<T>> {
         Box::new(self.clone())
     }

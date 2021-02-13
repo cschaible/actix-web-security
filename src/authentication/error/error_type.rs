@@ -13,4 +13,3 @@ pub enum AuthenticationError {
     #[display(fmt = "Access denied")]
     UsernameNotFound,
 }
-

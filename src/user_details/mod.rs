@@ -1,5 +1,5 @@
-use downcast_rs::Downcast;
 use downcast_rs::impl_downcast;
+use downcast_rs::Downcast;
 
 pub mod attachment;
 pub mod request_extension;
@@ -12,7 +12,9 @@ pub trait UserDetailsClone {
 }
 
 impl<U> UserDetailsClone for U
-    where U: 'static + UserDetails + Clone {
+where
+    U: 'static + UserDetails + Clone,
+{
     fn clone_box(&self) -> Box<dyn UserDetails> {
         Box::new(self.clone())
     }
