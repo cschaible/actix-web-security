@@ -27,13 +27,13 @@ impl BasicAuthenticationExtractor {
 
                 let username = credentials
                     .next()
-                    .ok_or(AuthenticationError::InvalidAuthorizationHeader)
-                    .map(|username| username.to_string())?;
+                    .ok_or(AuthenticationError::InvalidAuthorizationHeader)?
+                    .to_string();
 
                 let password = credentials
                     .next()
-                    .ok_or(AuthenticationError::InvalidAuthorizationHeader)
-                    .map(|password| password.to_string())?;
+                    .ok_or(AuthenticationError::InvalidAuthorizationHeader)?
+                    .to_string();
 
                 return Ok((username, password));
             }
