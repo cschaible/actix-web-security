@@ -36,6 +36,11 @@ features = ["blocking", "json", "native-tls"] # Alternative: "rustls-tls-native-
 optional = true
 version = "0.11"
 
+[dev-dependencies]
+actix-rt = "2"
+actix-http = "2.2"
+futures-util = { version = "0.3", default-features = false }
+
 [profile.release]
 opt-level = 3
 lto = true
