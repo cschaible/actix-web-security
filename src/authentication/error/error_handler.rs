@@ -68,7 +68,7 @@ fn add_env_error_code(
     error: AuthenticationError,
     error_codes: &mut HashMap<AuthenticationError, u16>,
 ) {
-    match std::env::var(format!("{}_code", error.to_string())) {
+    match std::env::var(format!("{}_code", error)) {
         Ok(code) => error_codes.insert(
             error,
             code.parse::<u16>().expect("Invalid status code mapping"),
@@ -82,7 +82,7 @@ fn add_env_error_message(
     default_message: String,
     error_messages: &mut HashMap<AuthenticationError, String>,
 ) {
-    match std::env::var(format!("{}_message", error.to_string())) {
+    match std::env::var(format!("{}_message", error)) {
         Ok(message) => error_messages.insert(error, message),
         _ => error_messages.insert(error, default_message),
     };
@@ -93,22 +93,19 @@ fn add_env_error_message(
 /// The status code must be in the range: 100 <= code <= 1000
 pub fn overwrite_auth_error_status_code(error: AuthenticationError, status_code: u16) {
     assert!((100..=1000).contains(&status_code), "Invalid status code");
-    std::env::set_var(
-        format!("{}_code", error.to_string()),
-        status_code.to_string(),
-    );
+    std::env::set_var(format!("{}_code", error), status_code.to_string());
 }
 
 /// Errors have a predfined text message that is returned in case an error occurs.
 /// This message can be overwritten by calling this function.
 pub fn overwrite_auth_error_message(error: AuthenticationError, message: String) {
-    std::env::set_var(format!("{}_message", error.to_string()), message);
+    std::env::set_var(format!("{}_message", error), message);
 }
 
 /// Error responses return the content type header `text/html; charset=utf-8` by default.
 /// The header value can be overwritten by calling this function.
 pub fn set_auth_error_content_type(content_type: String) {
-    std::env::set_var("AUTH_ERROR_CONTENT_TYPE".to_string(), content_type);
+    std::env::set_var("AUTH_ERROR_CONTENT_TYPE", content_type);
 }
 
 impl error::ResponseError for AuthenticationError {
