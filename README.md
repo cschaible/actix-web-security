@@ -11,22 +11,14 @@ Basic-Auth / OAuth2 easy-to-use authentication modules for actix web.
 * JWK-Downloader to verify JWTs
 * JWT verification
 
-## Warning - Neither audited nor penetration tested 
-This library is not verified to be secure. It has neither been audited to be safe in an audit nor been pentested.
-The library was developed to the best of knowledge and belief.  
+## Note: Neither audited nor penetration tested 
+This library is provided "as is" without warranties of any kind and is not verified to be secure. 
+It has neither been audited to be safe in an audit nor been penetration tested. 
+The library was developed to the best of knowledge and belief.
 It's in your own responsibility to check the code for potential security issues or bugs and your own decision 
-whether you see it as safe and trustworthy or whether you prefer to not use it.
-
-In other words (excerpt of the MIT license):
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
+whether you see the code as safe and trustworthy or whether you prefer to not use it.
+The library is provided as open-source and the liability of any kind is excluded as described in the licenses
+the software is provided under.
 
 
 ## Install
