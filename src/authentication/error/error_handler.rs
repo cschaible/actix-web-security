@@ -32,7 +32,7 @@ static AUTH_ERROR_MESSAGE_MAPPING: Lazy<HashMap<AuthenticationError, String>> = 
     let mut error_messages: HashMap<AuthenticationError, String> = HashMap::new();
     add_env_error_message(
         AuthenticationError::InvalidAuthentication,
-        "invalid authentication type".to_string(),
+        "invalid authentication".to_string(),
         &mut error_messages,
     );
     add_env_error_message(
