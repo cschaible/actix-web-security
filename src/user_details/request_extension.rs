@@ -1,3 +1,5 @@
+//! Extension function to inject a `UserDetails` object into an endpoint.
+
 use std::future::Future;
 use std::pin::Pin;
 

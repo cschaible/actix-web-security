@@ -1,3 +1,4 @@
+//! Default implementation that loads JWKs from a URL and constucts a vector of `TokenDecoder`.
 use jsonwebtoken::Algorithm;
 
 use crate::authentication::error::error_type::JwkLoaderError;
@@ -7,6 +8,7 @@ use crate::authentication::scheme::bearer::jwt::default_jwt::DefaultJwt;
 use crate::authentication::scheme::bearer::jwt::token::decoder::rsa_decoder::RsaJwtDecoder;
 use crate::authentication::scheme::bearer::jwt::token::decoder::TokenDecoder;
 
+/// Load JWKs from the specified URL and return a vector of `TokenDecoder` with `RsaJwtDecoders` (JWKs + Algorithm).
 pub fn load_default_rsa_jwks(
     url: String,
     algorithm: Algorithm,

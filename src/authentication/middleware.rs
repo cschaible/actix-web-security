@@ -1,3 +1,5 @@
+//! The middleware module provides the http authentication middleware and authentication service.
+
 use std::cell::RefCell;
 use std::future::{self, Future, Ready};
 use std::pin::Pin;
@@ -14,6 +16,10 @@ use crate::authentication::scheme::header_extractor::AuthorizationHeaderExtracto
 use crate::authentication::ProviderManager;
 use crate::user_details::attachment::UserDetailsRequestAttachmentHelper;
 
+/// The `HttpAuthenticationMiddleware` is an actix middleware that wraps client requets, initiates
+/// and orchestrates the authentication process.  
+/// A `HttpAuthenticationMiddleware`is specific for the type of the authorization header extraction
+/// and a set of endpoints.
 pub struct HttpAuthenticationMiddleware<T, U>
 where
     T: AuthorizationHeaderExtractor + Clone,
@@ -27,6 +33,9 @@ where
 impl<T: AuthorizationHeaderExtractor + Clone, U: EndpointMatcher + Clone>
     HttpAuthenticationMiddleware<T, U>
 {
+    /// Constructs a new instance of `HttpAuthenticationMiddleware` for a given
+    /// `ProviderManager`, a boxed `AuthorizationHeaderExtractor` and a boxed
+    /// `EndpointMatcher`.
     pub fn new(
         provider_manager: ProviderManager,
         authorization_extractor: Box<T>,
@@ -67,6 +76,7 @@ where
     }
 }
 
+/// The `HttpAuthenticationService` executes the authentication process (header extraction, authentication, error handling).
 pub struct HttpAuthenticationService<
     S,
     T: AuthorizationHeaderExtractor + Clone,

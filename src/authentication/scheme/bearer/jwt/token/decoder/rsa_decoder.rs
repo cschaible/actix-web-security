@@ -1,3 +1,4 @@
+//! A RSA token decoder implementation
 use jsonwebtoken::{decode, Algorithm, DecodingKey, Validation};
 use serde::Deserialize;
 
@@ -5,11 +6,13 @@ use crate::authentication::error::error_type::AuthenticationError;
 use crate::authentication::scheme::bearer::jwt::token::decoder::TokenDecoder;
 use crate::authentication::scheme::bearer::jwt::token::Claims;
 
+/// RSA key component trait definition. Stores the n- and e-component of the RSA key.
 pub trait RsaKeyComponents {
     fn get_n(&self) -> String;
     fn get_e(&self) -> String;
 }
 
+/// RSA JWT decoder trait definition.
 #[derive(Clone)]
 pub struct RsaJwtDecoder {
     algorithm: Algorithm,
@@ -17,6 +20,7 @@ pub struct RsaJwtDecoder {
 }
 
 impl RsaJwtDecoder {
+    /// Constructs a new instance of `RsaJwtDecoder` for the given algorithm and keys.
     pub fn new(algorithm: Algorithm, rsa_keys: Vec<Box<dyn RsaKeyComponents>>) -> RsaJwtDecoder {
         let mut decoding_keys: Vec<DecodingKey<'static>> = Vec::new();
 

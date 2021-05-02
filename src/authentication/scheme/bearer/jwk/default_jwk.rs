@@ -1,12 +1,16 @@
+//! Type definitions as a default implementation of JWKs.
+
 use serde::Deserialize;
 
 use crate::authentication::scheme::bearer::jwt::token::decoder::rsa_decoder::RsaKeyComponents;
 
+/// A wrapper for a typed vector of `DefaultJwk` that is cloneable.
 #[derive(Deserialize, Debug, Clone)]
 pub struct DefaultJwks {
     pub keys: Vec<DefaultJwk>,
 }
 
+/// A default JWK type definition.
 #[derive(Deserialize, Debug, Clone)]
 pub struct DefaultJwk {
     #[serde(rename = "kty")]

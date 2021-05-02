@@ -1,3 +1,5 @@
+//! A default implementation of a authentication extractor for basic authentication.
+
 use actix_web::http::{header, HeaderMap, HeaderValue};
 use async_trait::async_trait;
 
@@ -8,10 +10,14 @@ use crate::authentication::scheme::header_extractor::{
     extract_auth_header, AuthorizationHeaderExtractor,
 };
 
+/// The definition of a `BasicAuthenticationExtractor`. The authentication extractor
+/// extracts the authentication information from the authorization header and decodes
+/// the user credentials to be used in the user authentication.
 #[derive(Clone)]
 pub struct BasicAuthenticationExtractor {}
 
 impl BasicAuthenticationExtractor {
+    /// Constructs a new instance of `BasicAuthenticationExtractor`.
     pub fn new() -> BasicAuthenticationExtractor {
         BasicAuthenticationExtractor {}
     }

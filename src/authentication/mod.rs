@@ -1,3 +1,7 @@
+//! The authentication module provides all authentication related functionality.
+//! This consists of the actix middleware, authentication providers and default implementations
+//! for OAuth2 and Basic authentication.
+
 use crate::authentication::error::error_type::AuthenticationError;
 use crate::authentication::scheme::authentication::Authentication;
 use crate::authentication::scheme::authentication_provider::AuthenticationProvider;
@@ -8,12 +12,16 @@ pub mod error;
 pub mod middleware;
 pub mod scheme;
 
+/// A provider manager can be used to register one or more authentication providers to be executed in
+/// a chain (until the authentication on a provider succeeds or fails on all providers).
+/// A provider manager is registered in the middleware to execute the authentication process.
 #[derive(Clone)]
 pub struct ProviderManager {
     providers: Vec<Box<dyn AuthenticationProvider>>,
 }
 
 impl ProviderManager {
+    /// Constructs a new instance for the given vector of boxed authentication providers.
     pub fn new(providers: Vec<Box<dyn AuthenticationProvider>>) -> ProviderManager {
         ProviderManager { providers }
     }

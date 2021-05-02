@@ -1,3 +1,5 @@
+//! A default implementation of an `AuthenticationProvider` for a JWT based OAuth2 authentication.
+
 use async_trait::async_trait;
 
 use crate::authentication::error::error_type::AuthenticationError;
@@ -7,12 +9,15 @@ use crate::authentication::scheme::bearer::jwt::user_details_service::JwtUserDet
 use crate::authentication::scheme::bearer::jwt::JwtBearerAuthentication;
 use crate::user_details::UserDetails;
 
+/// The definition of a `JwtAuthenticationProvider`.
 #[derive(Clone)]
 pub struct JwtAuthenticationProvider {
     user_details_service: Box<dyn JwtUserDetailsService>,
 }
 
 impl JwtAuthenticationProvider {
+    /// Constructs an instance of a `JwtAuthenticationProvider` for a boxed instance of a `JwtUserDetailsService`
+    /// which does the actual data lookup for the authentication.
     pub fn new(user_details_service: Box<dyn JwtUserDetailsService>) -> JwtAuthenticationProvider {
         JwtAuthenticationProvider {
             user_details_service,

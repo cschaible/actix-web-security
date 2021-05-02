@@ -1,7 +1,10 @@
+//! A JWT is characterized through a set of `Claims`. There are mandatory claims defined for JWTs and optional ones.
+//! This module provides a default implementation with common claims (iss, sub, aud, exp, nbf, iat, jti).
 use serde::{Deserialize, Serialize};
 
 use crate::authentication::scheme::bearer::jwt::token::Claims;
 
+/// A default implementation that can be used for JWT based authentication with commonly used claims.
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct DefaultJwt {
     /// The URL of the identity provider

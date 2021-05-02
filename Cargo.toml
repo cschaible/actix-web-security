@@ -2,8 +2,9 @@
 name = "actix-web-security"
 version = "0.1.0-alpha.2"
 authors = ["Christian Schaible <cschaible@users.noreply.github.com>"]
-description = "Unofficial OAuth2 resource server lib for actix web - NOT production ready!"
-keywords = ["actix", "oauth", "openid", "resource-server"]
+description = "Basic-Auth / OAuth2 easy-to-use authentication modules for actix web"
+keywords = ["actix", "actix-web", "oauth", "oauth2", "openid"]
+categories = ["web-programming::http-server", "authentication"]
 repository = "https://github.com/cschaible/actix-web-security"
 edition = "2018"
 license = "MIT OR Apache-2.0"

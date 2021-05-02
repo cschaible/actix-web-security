@@ -1,3 +1,5 @@
+//! A default implementation of an `AuthenticationProvider` for basic authentication.
+
 use async_trait::async_trait;
 
 use crate::authentication::error::error_type::AuthenticationError;
@@ -7,12 +9,15 @@ use crate::authentication::scheme::basic::user_details_service::BasicUserDetails
 use crate::authentication::scheme::basic::BasicAuthentication;
 use crate::user_details::UserDetails;
 
+/// The definition of a `BasicAuthenticationProvider`.
 #[derive(Clone)]
 pub struct BasicAuthenticationProvider {
     user_details_service: Box<dyn BasicUserDetailsService>,
 }
 
 impl BasicAuthenticationProvider {
+    /// Constructs an instance of a `BasicAuthenticationProvider` for a boxed instance of a `BasicUserDetailsService`
+    /// which does the actual data lookup for the authentication.
     pub fn new(
         user_details_service: Box<dyn BasicUserDetailsService>,
     ) -> BasicAuthenticationProvider {

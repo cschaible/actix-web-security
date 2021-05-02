@@ -1,3 +1,5 @@
+//! A default implementation of a authentication extractor for bearer token based authentication.
+
 use actix_web::http::{header, HeaderMap, HeaderValue};
 use async_trait::async_trait;
 use serde::Deserialize;
@@ -10,12 +12,16 @@ use crate::authentication::scheme::header_extractor::{
     extract_auth_header, AuthorizationHeaderExtractor,
 };
 
+/// The definition of a `BearerAuthenticationExtractor`. The authentication extractor
+/// extracts the authentication information from the authorization header and decodes
+/// the token to be used in the user authentication using a token decoder.
 #[derive(Clone)]
 pub struct BearerAuthenticationExtractor<T: for<'b> Deserialize<'b> + Claims> {
     pub token_decoders: Vec<Box<dyn TokenDecoder<T>>>,
 }
 
 impl<T: for<'b> Deserialize<'b> + Claims> BearerAuthenticationExtractor<T> {
+    /// Constructs a new instance for a given vector of boxed `TokenDecoder` instances.
     pub fn new(token_decoders: Vec<Box<dyn TokenDecoder<T>>>) -> BearerAuthenticationExtractor<T> {
         BearerAuthenticationExtractor { token_decoders }
     }

@@ -1,11 +1,6 @@
-<div align="center">
-  <h1>Actix web security</h1>
-  <p>
-    <strong>Actix web security is a <b>NOT OFFICIAL</b> crate to secure web apps built with actix web.</strong>
-  </p>
-</div>
+# Actix web security
 
-
+Basic-Auth / OAuth2 easy-to-use authentication modules for actix web.
 
 ## Features
 
@@ -199,7 +194,7 @@ HttpServer::new(move || {
 .await?;
 ```
 
-More details can be found in the sample applications repository.
+More details can be found in the sample applications [repository](https://github.com/cschaible/actix-web-security-samples).
 
 ## License
 

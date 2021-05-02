@@ -1,3 +1,7 @@
+//! Authentication errors that occur in the crate's source code must be handled.
+//! Due to rusts limited capabilites to register / overwrite code from other traits
+//! some helper functions are provided to customize the error responses.
+
 use std::collections::HashMap;
 
 use actix_web::dev::HttpResponseBuilder;
@@ -23,6 +27,7 @@ static AUTH_ERROR_STATUS_CODE_MAPPING: Lazy<HashMap<AuthenticationError, u16>> =
     );
     error_codes
 });
+
 static AUTH_ERROR_MESSAGE_MAPPING: Lazy<HashMap<AuthenticationError, String>> = Lazy::new(|| {
     let mut error_messages: HashMap<AuthenticationError, String> = HashMap::new();
     add_env_error_message(
@@ -52,6 +57,7 @@ static AUTH_ERROR_MESSAGE_MAPPING: Lazy<HashMap<AuthenticationError, String>> = 
     );
     error_messages
 });
+
 static AUTH_ERROR_CONTENT_TYPE: Lazy<String> =
     Lazy::new(|| match std::env::var("AUTH_ERROR_CONTENT_TYPE") {
         Ok(content_type) => content_type,
@@ -82,6 +88,9 @@ fn add_env_error_message(
     };
 }
 
+/// Errors have a predfined HTTP-Status code that is returned in case an error occurs.
+/// This status code can be overwritten by calling this function.
+/// The status code must be in the range: 100 <= code <= 1000
 pub fn overwrite_auth_error_status_code(error: AuthenticationError, status_code: u16) {
     assert!((100..=1000).contains(&status_code), "Invalid status code");
     std::env::set_var(
@@ -90,10 +99,14 @@ pub fn overwrite_auth_error_status_code(error: AuthenticationError, status_code:
     );
 }
 
+/// Errors have a predfined text message that is returned in case an error occurs.
+/// This message can be overwritten by calling this function.
 pub fn overwrite_auth_error_message(error: AuthenticationError, message: String) {
     std::env::set_var(format!("{}_message", error.to_string()), message);
 }
 
+/// Error responses return the content type header `text/html; charset=utf-8` by default.
+/// The header value can be overwritten by calling this function.
 pub fn set_auth_error_content_type(content_type: String) {
     std::env::set_var("AUTH_ERROR_CONTENT_TYPE".to_string(), content_type);
 }
