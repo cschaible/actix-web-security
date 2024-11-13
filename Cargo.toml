@@ -1,6 +1,6 @@
 [package]
 name = "actix-web-security"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Christian Schaible <cschaible@users.noreply.github.com>"]
 description = "Basic-Auth / OAuth2 easy-to-use authentication modules for actix web"
 keywords = ["actix", "actix-web", "oauth", "oauth2", "openid"]
